@@ -1,0 +1,7 @@
+﻿  bpd_d3d11.cpp
+  dllMain.cpp
+     Creating library D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11_Release.lib and object D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11_Release.exp
+  Generating code
+  All 2 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  dll_d3d11.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11_Release.dll
