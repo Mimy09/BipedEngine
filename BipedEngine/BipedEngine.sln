@@ -5,6 +5,7 @@ VisualStudioVersion = 15.0.27428.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BipedEngine", "BipedEngine\BipedEngine.vcxproj", "{04AE3DC4-5511-4425-B39C-F759A682CCD2}"
 	ProjectSection(ProjectDependencies) = postProject
+		{6153074D-A9A6-407C-A47F-80EC8349333C} = {6153074D-A9A6-407C-A47F-80EC8349333C}
 		{4C44A6C0-446F-4691-9E34-90D10BA031F4} = {4C44A6C0-446F-4691-9E34-90D10BA031F4}
 	EndProjectSection
 EndProject

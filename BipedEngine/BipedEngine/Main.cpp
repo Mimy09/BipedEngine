@@ -1,4 +1,5 @@
-//#define BPD_NO_D3D
+#define BPD_ONLY_OPENGL
+
 #include "win32/bpd-include.h"
 
 

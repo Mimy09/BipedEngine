@@ -1,7 +1,9 @@
 ﻿  bpd_d3d11.cpp
-  dllMain.cpp
-     Creating library D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11_Release.lib and object D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11_Release.exp
+d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d11\bpd_d3d11.cpp(151): warning C4316: 'bpd::_D3D11_Window': object allocated on the heap may not be aligned 16
+     Creating library D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11.lib and object D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11.exp
   Generating code
-  All 2 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  4 of 15 functions (26.7%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  dll_d3d11.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11_Release.dll
+  dll_d3d11.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d11.dll

@@ -10,6 +10,13 @@ namespace bpd{
 		Vec3 pos;
 		Vec4 col;
 	};
+
+	struct Buffer {
+		Vertex_buffer* vertex;
+		int vertex_count;
+		WORD* index;
+		int index_count;
+	};
 }
 
 #endif

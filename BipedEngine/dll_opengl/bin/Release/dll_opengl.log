@@ -1,0 +1,7 @@
+﻿  bpd_opengl.cpp
+  dllMain.cpp
+     Creating library D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_opengl.lib and object D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_opengl.exp
+  Generating code
+  All 6 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  dll_opengl.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_opengl.dll

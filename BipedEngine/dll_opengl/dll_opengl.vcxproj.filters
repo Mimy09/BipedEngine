@@ -26,5 +26,8 @@
     <ClInclude Include="bpd_opengl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bpd_opengl_def.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

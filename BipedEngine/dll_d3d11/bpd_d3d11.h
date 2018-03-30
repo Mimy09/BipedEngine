@@ -13,7 +13,6 @@
 #pragma comment (lib, "d3dcompiler.lib")
 
 #define Handle(name) typedef struct _##name* name
-
 #define DLL __declspec(dllexport)
 
 #include <windows.h>
@@ -46,7 +45,18 @@ extern "C" {
 	// Returns:   DLL const char * __stdcall
 	// Qualifier:
 	//************************************
-	DLL const char * __stdcall dll_dllInfo();
+	DLL const char * __stdcall dll_info();
+
+
+	//************************************
+	// Method:    dll_release
+	// FullName:  dll_release
+	// Access:    public 
+	// Returns:   DLL void _stdcall
+	// Qualifier:
+	// Parameter: D3D11_Window & d3d11
+	//************************************
+	DLL void _stdcall dll_release(bpd::D3D11_Window& d3d11);
 
 
 	//************************************
@@ -76,8 +86,7 @@ extern "C" {
 	//************************************
 	DLL void __stdcall dll_updateGraphics(
 		bpd::D3D11_Window &d3d11,
-		float clear_color[4],
-		int index
+		float clear_color[4]
 	);
 
 
@@ -95,10 +104,8 @@ extern "C" {
 	//************************************
 	DLL void __stdcall dll_passBuffers(
 		bpd::D3D11_Window &d3d11,
-		bpd::Vertex vertex[],
-		int vertex_count,
-		WORD index[],
-		int index_count
+		bpd::Buffer buffer[],
+		int buffer_count
 	);
 
 #ifdef __cplusplus

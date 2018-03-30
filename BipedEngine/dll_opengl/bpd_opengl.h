@@ -1,12 +1,15 @@
 #ifndef _BPD_OPENGL_H_
 #define _BPD_OPENGL_H_
 
-
-
 #define Handle(name) typedef struct _##name* name
 #define DLL __declspec(dllexport)
 
+/** Includes **************************************************************/
 #include <windows.h>
+#include "GL/glew.h"
+#include "GL/GL.h"
+#include "glm/glm.hpp"
+#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -14,16 +17,40 @@ extern "C" {
 
 	namespace bpd {
 		Handle(OPENGL_Window);
+
+		struct Vertex {
+			glm::vec3 pos;
+			glm::vec4 col;
+		};
+
+		struct Buffer {
+			Vertex *vertex;
+			int vertex_count;
+			WORD *index;
+			int index_count;
+		};
+
 	}
 
-	DLL const char * __stdcall dll_dllInfo();
+	DLL const char * __stdcall dll_info();
+
+	DLL void _stdcall dll_release(bpd::OPENGL_Window& d3d11);
 
 	DLL int __stdcall dll_createGraphics(
-		bpd::OPENGL_Window& d3d11,
+		bpd::OPENGL_Window& opengl,
 		HWND& hWnd
 	);
 
-	DLL void __stdcall dll_updateGraphics(bpd::OPENGL_Window &d3d11);
+	DLL void __stdcall dll_updateGraphics(
+		bpd::OPENGL_Window &opengl,
+		float clear_color[4]
+	);
+
+	DLL void __stdcall dll_passBuffers(
+		bpd::OPENGL_Window &opengl,
+		bpd::Buffer buffer[],
+		int buffer_count
+	);
 
 #ifdef __cplusplus
 }

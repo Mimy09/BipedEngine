@@ -1,5 +1,7 @@
 ﻿  Main.cpp
   Generating code
-  All 2 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  3 of 15 functions (20.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  BipedEngine.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\BipedEngine_Release.exe
+  BipedEngine.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\BipedEngine.exe

@@ -14,7 +14,8 @@ extern "C" {
 
 	void PrintCompileErrorMessages(ID3DBlob* errors) {
 		char temp[1024];
-		sprintf_s(temp,sizeof(temp),"%.*s",(int)errors->GetBufferSize(),(char *)errors->GetBufferPointer());
+		MessageBox(0, "Compile Shader Error", "Error", MB_OK | MB_ICONERROR);
+		//sprintf_s(temp,sizeof(temp),"%.*s",(int)errors->GetBufferSize(),(char *)errors->GetBufferPointer());
 		OutputDebugStringA(temp);
 	}
 
@@ -134,8 +135,15 @@ extern "C" {
 
 	/** Dll Functions **************************************************************/
 
-	const char * __stdcall dll_dllInfo() {
+	const char * __stdcall dll_info() {
 		return "BPD_D3D11";
+	}
+
+	void _stdcall dll_release(D3D11_Window& d3d11){
+		d3d11->swapchain->Release();
+		d3d11->device->Release();
+		d3d11->vertexShader->Release();
+		d3d11->pixelShader->Release();
 	}
 
 	int __stdcall dll_createGraphics(D3D11_Window& d3d11, HWND& hWnd) {
@@ -150,16 +158,19 @@ extern "C" {
 		return 0;
 	}
 
-	void __stdcall dll_updateGraphics(D3D11_Window &d3d11, float clear_color[4], int index){
-		d3d11DeviceContext(d3d11);
-
-		d3d11->device_context->ClearRenderTargetView(d3d11->rtv,clear_color);
-		d3d11->device_context->DrawIndexed(index,0,0);
+	void __stdcall dll_updateGraphics(D3D11_Window &d3d11, float clear_color[4]){
 		d3d11->swapchain->Present(0,0);
+		d3d11->device_context->ClearRenderTargetView(d3d11->rtv,clear_color);
 	}
 
-	void __stdcall dll_passBuffers(D3D11_Window &d3d11,Vertex vertex[],int vertex_count,WORD index[],int index_count){
-		d3d11Buffer(d3d11,vertex,vertex_count,index,index_count);
+	void __stdcall dll_passBuffers(D3D11_Window &d3d11, Buffer buffer[],int buffer_count){
+		for (int i = 0; i < buffer_count; i++){
+			d3d11Buffer(d3d11,buffer[i].vertex,buffer[i].vertex_count,buffer[i].index,buffer[i].index_count);
+			d3d11DeviceContext(d3d11);
+
+			d3d11->device_context->DrawIndexed(buffer[i].index_count,0,0);
+			
+		}
 	}
 
 
