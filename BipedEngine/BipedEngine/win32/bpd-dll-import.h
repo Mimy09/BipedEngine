@@ -3,13 +3,14 @@
 
 #include "../math/bpd-vector.h"
 
-#define _DLL_FUNCTIONS_N 3
+#define _DLL_FUNCTIONS_N 4
 
 #define dll_Load(hdll, x) bpd::dll::loadDll(hdll, x)
 #define dll_Unload(hdll) bpd::dll::UnloadDll(hdll)
-#define dll_CreateGraphics(hd3d,hWnd) bpd::dll::functions.by_type.dll_createGraphics(hd3d,hWnd)
-#define dll_UpdateGraphics(hd3d) bpd::dll::functions.by_type.dll_updateGraphics(hd3d)
-#define dll_DllInfo() bpd::dll::functions.by_type.dll_dllInfo()
+#define dll_CreateGraphics bpd::dll::functions.by_type.dll_createGraphics
+#define dll_UpdateGraphics bpd::dll::functions.by_type.dll_updateGraphics
+#define dll_PassBuffers bpd::dll::functions.by_type.dll_passBuffers
+#define dll_DllInfo bpd::dll::functions.by_type.dll_dllInfo
 
 #define Handle(name) typedef struct _##name* name
 
@@ -22,7 +23,8 @@ namespace bpd { namespace dll {
 	{
 		"_dll_createGraphics@8",
 		"_dll_dllInfo@0",
-		"_dll_updateGraphics@4",
+		"_dll_passBuffers@20",
+		"_dll_updateGraphics@12",
 	};
 
 	typedef struct {
@@ -31,7 +33,19 @@ namespace bpd { namespace dll {
 			HWND& hWnd
 		);
 		const char *(__stdcall* dll_dllInfo)();
-		void(__stdcall* dll_updateGraphics)(HBPDD3D& hD3D);
+		void(__stdcall* dll_passBuffers)(
+			HBPDD3D& hD3D,
+			Vertex_buffer vertex[],
+			int vertex_count,
+			WORD index[],
+			int index_count
+		);
+		void(__stdcall* dll_updateGraphics)(
+			HBPDD3D& hD3D,
+			float clear_color[4],
+			int index
+		);
+
 	} functions_struct;
 
 	typedef union {

@@ -1,10 +1,6 @@
 #ifndef _BPD_WINDOW_H_
 #define _BPD_WINDOW_H_
 
-// TODO: Learn how to inject vertex buffer and index buffer into d3d11
-// may have to rebuild device context
-// and may have to rebuild your brain
-
 LRESULT CALLBACK WndProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam) {
 	PAINTSTRUCT ps;
 
@@ -110,7 +106,23 @@ namespace bpd{
 					TranslateMessage(&msg);
 					DispatchMessage(&msg);
 				} else {
-					dll_UpdateGraphics(hD3D);
+					float clear_color[] = { 0.0f,0.0f,0.0f,1.0f };
+
+					Vertex_buffer v[] = {
+						{ Vec3{-0.5f,  0.5f, 0.0f}, Vec4{1.0f, 0.0f, 0.0f, 1.0f} }, // top left
+						{ Vec3{ 1.0f, -1.0f, 0.0f}, Vec4{0.0f, 1.0f, 0.0f, 1.0f} }, // bottom right
+						{ Vec3{-1.0f, -1.0f, 0.0f}, Vec4{0.0f, 0.0f, 1.0f, 1.0f} }, // bottom left
+						{ Vec3{ 0.5f,  0.5f, 0.0f}, Vec4{1.0f, 1.0f, 1.0f, 1.0f} }, // top right
+					};
+
+					WORD i[] =
+					{
+						0,3,2,
+						2,3,1,
+					};
+
+					dll_PassBuffers(hD3D,v,4,i,6);
+					dll_UpdateGraphics(hD3D, clear_color, 12);
 				}
 			}
 		}

@@ -73,7 +73,7 @@ extern "C" {
 		d3d11->vp.TopLeftY = 0;
 		d3d11->device_context->RSSetViewports(1,&d3d11->vp);
 	}
-	void d3d11Buffer(D3D11_Window & d3d11,Vertex vertices[],int vertex_size,WORD indices[],int index_size) {
+	void d3d11Buffer(D3D11_Window & d3d11, Vertex vertices[],int vertex_size,WORD indices[],int index_size) {
 		D3D11_BUFFER_DESC bd;
 		D3D11_SUBRESOURCE_DATA InitData;
 
@@ -127,6 +127,9 @@ extern "C" {
 
 		d3d11->device_context->VSSetShader(d3d11->vertexShader,NULL,0);
 		d3d11->device_context->PSSetShader(d3d11->pixelShader,NULL,0);
+
+		d3d11->vertexBuffer->Release();
+		d3d11->indexBuffer->Release();
 	}
 
 	/** Dll Functions **************************************************************/
@@ -141,37 +144,25 @@ extern "C" {
 
 		d3d11SwapChain(d3d11, hWnd);
 		d3d11RenderTargetView(d3d11);
-
-		Vertex v[] = {
-			{ DirectX::XMFLOAT3(-1.0f,  1.0f, 0.0f), DirectX::XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f) }, // top left
-			{ DirectX::XMFLOAT3(1.0f, -1.0f, 0.0f), DirectX::XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f) }, // bottom right
-			{ DirectX::XMFLOAT3(-1.0f, -1.0f, 0.0f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f) }, // bottom left
-			{ DirectX::XMFLOAT3(1.0f,  1.0f, 0.0f), DirectX::XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f) }, // top right
-		};
-		WORD i[] =
-		{
-			0,3,2,
-			2,3,1,
-		};
-
-		d3d11Buffer(d3d11,v,4,i,6);
 		d3d11InitDeviceObjects(d3d11);
-		d3d11DeviceContext(d3d11);
 		d3d11ViewPort(d3d11,hWnd);
 
 		return 0;
 	}
 
-	void __stdcall dll_updateGraphics(D3D11_Window &d3d11){
-		float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; // RGBA
-		d3d11->device_context->ClearRenderTargetView(d3d11->rtv,ClearColor);
+	void __stdcall dll_updateGraphics(D3D11_Window &d3d11, float clear_color[4], int index){
+		d3d11DeviceContext(d3d11);
 
-		d3d11->device_context->DrawIndexed(6,0,0);
-
+		d3d11->device_context->ClearRenderTargetView(d3d11->rtv,clear_color);
+		d3d11->device_context->DrawIndexed(index,0,0);
 		d3d11->swapchain->Present(0,0);
 	}
 
-	
+	void __stdcall dll_passBuffers(D3D11_Window &d3d11,Vertex vertex[],int vertex_count,WORD index[],int index_count){
+		d3d11Buffer(d3d11,vertex,vertex_count,index,index_count);
+	}
+
+
 
 #ifdef __cplusplus
 }

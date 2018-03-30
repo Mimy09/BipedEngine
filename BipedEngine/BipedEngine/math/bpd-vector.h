@@ -6,7 +6,7 @@ namespace bpd{
 	struct Vec3{ float x, y, z; };
 	struct Vec4{ float x, y, z, w; };
 
-	struct Vector_buffer {
+	struct Vertex_buffer {
 		Vec3 pos;
 		Vec4 col;
 	};

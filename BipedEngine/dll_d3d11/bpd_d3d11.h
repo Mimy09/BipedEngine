@@ -20,7 +20,8 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif	
+
 	namespace bpd {
 		Handle(D3D11_Window);
 
@@ -28,17 +29,77 @@ extern "C" {
 			DirectX::XMFLOAT3 Pos;
 			DirectX::XMFLOAT4 Col;
 		};
+
+		struct Buffer {
+			Vertex *vertex;
+			int vertex_count;
+			WORD *index;
+			int index_count;
+		};
 	}
 
 
+	//************************************
+	// Method:    dll_dllInfo
+	// FullName:  dll_dllInfo
+	// Access:    public 
+	// Returns:   DLL const char * __stdcall
+	// Qualifier:
+	//************************************
 	DLL const char * __stdcall dll_dllInfo();
 
+
+	//************************************
+	// Method:    dll_createGraphics
+	// FullName:  dll_createGraphics
+	// Access:    public 
+	// Returns:   DLL int __stdcall
+	// Qualifier:
+	// Parameter: bpd::D3D11_Window & d3d11
+	// Parameter: HWND & hWnd
+	//************************************
 	DLL int __stdcall dll_createGraphics(
 		bpd::D3D11_Window& d3d11,
 		HWND& hWnd
 	);
 
-	DLL void __stdcall dll_updateGraphics(bpd::D3D11_Window &d3d11);
+
+	//************************************
+	// Method:    dll_updateGraphics
+	// FullName:  dll_updateGraphics
+	// Access:    public 
+	// Returns:   DLL void __stdcall
+	// Qualifier:
+	// Parameter: bpd::D3D11_Window & d3d11
+	// Parameter: float clear_color[4]
+	// Parameter: int index
+	//************************************
+	DLL void __stdcall dll_updateGraphics(
+		bpd::D3D11_Window &d3d11,
+		float clear_color[4],
+		int index
+	);
+
+
+	//************************************
+	// Method:    dll_passBuffers
+	// FullName:  dll_passBuffers
+	// Access:    public 
+	// Returns:   DLL void __stdcall
+	// Qualifier:
+	// Parameter: bpd::D3D11_Window & d3d11
+	// Parameter: bpd::Vertex vertex[]
+	// Parameter: int vertex_count
+	// Parameter: WORD index[]
+	// Parameter: int index_count
+	//************************************
+	DLL void __stdcall dll_passBuffers(
+		bpd::D3D11_Window &d3d11,
+		bpd::Vertex vertex[],
+		int vertex_count,
+		WORD index[],
+		int index_count
+	);
 
 #ifdef __cplusplus
 }

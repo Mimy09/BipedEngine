@@ -1,3 +1,3 @@
 ﻿  bpd_d3d11.cpp
-d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d11\bpd_d3d11.cpp(140): warning C4316: 'bpd::_D3D11_Window': object allocated on the heap may not be aligned 16
+d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d11\bpd_d3d11.cpp(143): warning C4316: 'bpd::_D3D11_Window': object allocated on the heap may not be aligned 16
   dll_d3d11.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Debug\dll_d3d11.dll
