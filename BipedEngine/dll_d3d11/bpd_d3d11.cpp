@@ -158,19 +158,38 @@ extern "C" {
 		return 0;
 	}
 
-	void __stdcall dll_updateGraphics(D3D11_Window &d3d11, float clear_color[4]){
-		d3d11->swapchain->Present(0,0);
-		d3d11->device_context->ClearRenderTargetView(d3d11->rtv,clear_color);
+	void __stdcall dll_update(D3D11_Window &d3d11){
+		static uint64_t frameCounter = 0;
+		static double elapsedSeconds = 0.0;
+		static std::chrono::high_resolution_clock clock;
+		static auto t0 = clock.now();
+
+		frameCounter++;
+		auto t1 = clock.now();
+		auto deltaTime = t1 - t0;
+		t0 = t1;
+
+		elapsedSeconds += deltaTime.count() * 1e-9;
+		if(elapsedSeconds > 1.0) {
+			char buffer[500];
+			auto fps = frameCounter / elapsedSeconds;
+			printf("FPS: %f\n",fps);
+
+			frameCounter = 0;
+			elapsedSeconds = 0.0;
+		}
 	}
 
-	void __stdcall dll_passBuffers(D3D11_Window &d3d11, Buffer buffer[],int buffer_count){
+	void __stdcall dll_draw(D3D11_Window &d3d11, Buffer buffer[],int buffer_count,float clear_color[4]){
 		for (int i = 0; i < buffer_count; i++){
 			d3d11Buffer(d3d11,buffer[i].vertex,buffer[i].vertex_count,buffer[i].index,buffer[i].index_count);
 			d3d11DeviceContext(d3d11);
 
 			d3d11->device_context->DrawIndexed(buffer[i].index_count,0,0);
-			
 		}
+
+		d3d11->swapchain->Present(0,0);
+		d3d11->device_context->ClearRenderTargetView(d3d11->rtv,clear_color);
 	}
 
 

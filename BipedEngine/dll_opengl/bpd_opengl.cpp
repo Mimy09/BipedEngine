@@ -25,11 +25,11 @@ int __stdcall dll_createGraphics(OPENGL_Window& opengl, HWND& hWnd){
 	return 0;
 }
 
-void __stdcall dll_updateGraphics(OPENGL_Window &opengl, float clear_color[4]) {
+void __stdcall dll_update(OPENGL_Window &opengl) {
 
 }
 
-void __stdcall dll_passBuffers(OPENGL_Window &opengl, Buffer buffer[], int buffer_count) {
+void __stdcall dll_draw(OPENGL_Window &opengl, Buffer buffer[], int buffer_count,float clear_color[4]) {
 	
 }
 

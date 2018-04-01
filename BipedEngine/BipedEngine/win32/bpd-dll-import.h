@@ -9,9 +9,9 @@
 #define dll_Unload bpd::dll::UnloadDll
 
 #define dll_CreateGraphics bpd::dll::functions.by_type.dll_createGraphics
-#define dll_UpdateGraphics bpd::dll::functions.by_type.dll_updateGraphics
+#define dll_Update bpd::dll::functions.by_type.dll_update
 #define dll_Release bpd::dll::functions.by_type.dll_release
-#define dll_PassBuffers bpd::dll::functions.by_type.dll_passBuffers
+#define dll_Draw bpd::dll::functions.by_type.dll_draw
 #define dll_Info bpd::dll::functions.by_type.dll_info
 
 #define Handle(name) typedef struct _##name* name
@@ -24,10 +24,10 @@ namespace bpd { namespace dll {
 	const char* DLL_FUNCTION_NAMES[_DLL_FUNCTIONS_N] =
 	{
 		"_dll_createGraphics@8",
+		"_dll_draw@16",
 		"_dll_info@0",
-		"_dll_passBuffers@12",
 		"_dll_release@4",
-		"_dll_updateGraphics@8",
+		"_dll_update@4",
 	};
 
 	typedef struct {
@@ -35,18 +35,18 @@ namespace bpd { namespace dll {
 			HBPDD3D& hD3D,
 			HWND& hWnd
 		);
-		const char *(__stdcall* dll_info)();
-		void(__stdcall* dll_passBuffers)(
+		void(__stdcall* dll_draw)(
 			HBPDD3D& hD3D,
 			Buffer buffer[],
-			int buffer_count
+			int buffer_count,
+			float clear_color[4]
 		);
+		const char *(__stdcall* dll_info)();
 		void(__stdcall* dll_release)(
 			HBPDD3D& hD3D
 		);
-		void(__stdcall* dll_updateGraphics)(
-			HBPDD3D& hD3D,
-			float clear_color[4]
+		void(__stdcall* dll_update)(
+			HBPDD3D& hD3D
 		);
 
 	} functions_struct;

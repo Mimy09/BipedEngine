@@ -1,5 +1,4 @@
-#define BPD_ONLY_OPENGL
-
+//#define BPD_ONLY_D3D11
 #include "win32/bpd-include.h"
 
 

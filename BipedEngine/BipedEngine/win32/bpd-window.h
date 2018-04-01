@@ -41,10 +41,15 @@
 
 LRESULT CALLBACK WndProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam) {
 	PAINTSTRUCT ps;
+	bpd::dll::HBPDD3D hD3D;
 
 	switch(uMsg) {
 	case WM_PAINT:
 	{
+
+		//dll_PassBuffers(hD3D,NULL,NULL);
+		//dll_UpdateGraphics(hD3D, NULL);
+
 		HDC hdc = BeginPaint(hwnd,&ps);
 		EndPaint(hwnd,&ps);
 		break;
@@ -110,13 +115,15 @@ namespace bpd{
 			CreatWindowClass();
 			MakeWindow(dll_Info(), X, Y, Width, Height);
 
-			dll_CreateGraphics(hD3D, hWnd);
-
-			ShowWindow(hWnd,SW_SHOW);
-
 #if defined _DEBUG
 			CreateConsole();
 #endif
+
+			ShowWindow(hWnd,SW_SHOW);
+			UpdateWindow(hWnd);
+
+			dll_CreateGraphics(hD3D, hWnd);
+
 		}
 
 		void CreatWindowClass(){
@@ -189,8 +196,8 @@ namespace bpd{
 						{ v2, 4, i2, 3 },
 					};
 
-					dll_PassBuffers(hD3D,b,2);
-					dll_UpdateGraphics(hD3D, clear_color);
+					dll_Draw(hD3D,b,2,clear_color);
+					dll_Update(hD3D);
 				}
 			}
 		}

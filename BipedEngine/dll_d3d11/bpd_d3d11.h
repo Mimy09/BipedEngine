@@ -12,6 +12,8 @@
 #pragma comment (lib, "dxgi.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
+#include <chrono>
+
 #define Handle(name) typedef struct _##name* name
 #define DLL __declspec(dllexport)
 
@@ -37,75 +39,26 @@ extern "C" {
 		};
 	}
 
-
-	//************************************
-	// Method:    dll_dllInfo
-	// FullName:  dll_dllInfo
-	// Access:    public 
-	// Returns:   DLL const char * __stdcall
-	// Qualifier:
-	//************************************
 	DLL const char * __stdcall dll_info();
 
+	DLL void _stdcall dll_release(
+		bpd::D3D11_Window& d3d11
+	);
 
-	//************************************
-	// Method:    dll_release
-	// FullName:  dll_release
-	// Access:    public 
-	// Returns:   DLL void _stdcall
-	// Qualifier:
-	// Parameter: D3D11_Window & d3d11
-	//************************************
-	DLL void _stdcall dll_release(bpd::D3D11_Window& d3d11);
-
-
-	//************************************
-	// Method:    dll_createGraphics
-	// FullName:  dll_createGraphics
-	// Access:    public 
-	// Returns:   DLL int __stdcall
-	// Qualifier:
-	// Parameter: bpd::D3D11_Window & d3d11
-	// Parameter: HWND & hWnd
-	//************************************
 	DLL int __stdcall dll_createGraphics(
 		bpd::D3D11_Window& d3d11,
 		HWND& hWnd
 	);
 
-
-	//************************************
-	// Method:    dll_updateGraphics
-	// FullName:  dll_updateGraphics
-	// Access:    public 
-	// Returns:   DLL void __stdcall
-	// Qualifier:
-	// Parameter: bpd::D3D11_Window & d3d11
-	// Parameter: float clear_color[4]
-	// Parameter: int index
-	//************************************
-	DLL void __stdcall dll_updateGraphics(
-		bpd::D3D11_Window &d3d11,
-		float clear_color[4]
+	DLL void __stdcall dll_update(
+		bpd::D3D11_Window &d3d11
 	);
 
-
-	//************************************
-	// Method:    dll_passBuffers
-	// FullName:  dll_passBuffers
-	// Access:    public 
-	// Returns:   DLL void __stdcall
-	// Qualifier:
-	// Parameter: bpd::D3D11_Window & d3d11
-	// Parameter: bpd::Vertex vertex[]
-	// Parameter: int vertex_count
-	// Parameter: WORD index[]
-	// Parameter: int index_count
-	//************************************
-	DLL void __stdcall dll_passBuffers(
+	DLL void __stdcall dll_draw(
 		bpd::D3D11_Window &d3d11,
 		bpd::Buffer buffer[],
-		int buffer_count
+		int buffer_count,
+		float clear_color[4]
 	);
 
 #ifdef __cplusplus

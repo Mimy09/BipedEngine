@@ -41,15 +41,15 @@ extern "C" {
 		HWND& hWnd
 	);
 
-	DLL void __stdcall dll_updateGraphics(
-		bpd::OPENGL_Window &opengl,
-		float clear_color[4]
+	DLL void __stdcall dll_update(
+		bpd::OPENGL_Window &opengl
 	);
 
-	DLL void __stdcall dll_passBuffers(
+	DLL void __stdcall dll_draw(
 		bpd::OPENGL_Window &opengl,
 		bpd::Buffer buffer[],
-		int buffer_count
+		int buffer_count,
+		float clear_color[4]
 	);
 
 #ifdef __cplusplus
