@@ -1,0 +1,11 @@
+﻿  bpd_d3d12.cpp
+d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d12\bpd_d3d12.cpp(302): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d12\bpd_d3d12.cpp(303): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+     Creating library D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d12.lib and object D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d12.exp
+  Generating code
+d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d12\bpd_d3d12.cpp(336): warning C4715: 'InitD3D': not all control paths return a value
+  1 of 159 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  dll_d3d12.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Release\dll_d3d12.dll

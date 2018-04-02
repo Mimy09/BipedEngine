@@ -32,6 +32,7 @@ using namespace Microsoft::WRL;
 #include <dxgi1_6.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include <vector>
 
 // D3D12 extension library.
 #include "d3dx12.h"
@@ -52,7 +53,7 @@ extern "C" {
 		Handle(D3D12_Window);
 
 		struct Vertex {
-			//Vertex(float x,float y,float z,float r,float g,float b,float a) : pos(x,y,z),col(r,g,b,z) {}
+			Vertex(float x,float y,float z,float r,float g,float b,float a) : pos(x,y,z),col(r,g,b,z) {}
 			DirectX::XMFLOAT3 pos;
 			DirectX::XMFLOAT4 col;
 		};
@@ -60,8 +61,20 @@ extern "C" {
 		struct Buffer {
 			Vertex *vertex;
 			int vertex_count;
-			WORD *index;
+			DWORD *index;
 			int index_count;
+		};
+
+		// this is the structure of our constant buffer.
+		struct ConstantBufferPerObject {
+			DirectX::XMFLOAT4X4 wvpMat;
+		};
+
+		struct Transform{
+			DirectX::XMFLOAT4X4 WorldMat; // our first cubes world matrix (transformation matrix)
+			DirectX::XMFLOAT4X4 RotMat; // this will keep track of our rotation for the first cube
+			DirectX::XMFLOAT4 Position; // our first cubes position in space
+			DirectX::XMFLOAT4 Scale; // our first cubes position in space
 		};
 	}
 
@@ -85,6 +98,32 @@ extern "C" {
 		bpd::Buffer buffer[],
 		int buffer_count,
 		float clear_color[4]
+	);
+
+	DLL void __stdcall dll_reloadBuffers(
+		bpd::D3D12_Window &d3d12,
+		bpd::Buffer buffer[],
+		int buffer_count
+	);
+
+	DLL void __stdcall dll_setView(
+		bpd::D3D12_Window &d3d12,
+		DirectX::XMFLOAT4 cam_pos,
+		DirectX::XMFLOAT4 cam_target,
+		float fov
+	);
+
+	DLL int __stdcall dll_createObj(
+		bpd::D3D12_Window &d3d12,
+		DirectX::XMFLOAT4 pos
+	);
+
+	DLL void __stdcall dll_transformObj(
+		bpd::D3D12_Window &d3d12,
+		int ID,
+		DirectX::XMFLOAT4 position,
+		DirectX::XMFLOAT4 rotation,
+		DirectX::XMFLOAT4 scale
 	);
 
 #ifdef __cplusplus

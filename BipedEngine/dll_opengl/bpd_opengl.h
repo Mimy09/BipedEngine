@@ -6,10 +6,6 @@
 
 /** Includes **************************************************************/
 #include <windows.h>
-#include "GL/glew.h"
-#include "GL/GL.h"
-#include "glm/glm.hpp"
-#include <stdio.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,8 +15,8 @@ extern "C" {
 		Handle(OPENGL_Window);
 
 		struct Vertex {
-			glm::vec3 pos;
-			glm::vec4 col;
+			//glm::vec3 pos;
+			//glm::vec4 col;
 		};
 
 		struct Buffer {

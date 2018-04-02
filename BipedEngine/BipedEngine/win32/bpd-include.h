@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include <xtgmath.h>
 #pragma warning(disable:4996)
 
 #define Assert(x) if (!x) { MessageBoxA(0, #x, "Assertion Failed", MB_OK | MB_ICONERROR); __debugbreak(); }

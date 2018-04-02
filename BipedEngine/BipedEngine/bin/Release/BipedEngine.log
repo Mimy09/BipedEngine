@@ -1,6 +1,7 @@
 ﻿  Main.cpp
+d:\programfiles\programming\_git\bipedengine\bipedengine\bipedengine\win32\bpd-window.h(44): warning C4101: 'hD3D': unreferenced local variable
   Generating code
-  3 of 15 functions (20.0%) were compiled, the rest were copied from previous compilation.
+  0 of 12 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

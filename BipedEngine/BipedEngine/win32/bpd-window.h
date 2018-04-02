@@ -57,13 +57,12 @@ LRESULT CALLBACK WndProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam) {
 	case WM_CHAR:
 		if(wParam == VK_ESCAPE) {
 			DestroyWindow(hwnd);
+			FreeConsole();
 		}
 		break;
 	case WM_CLOSE:
 	case WM_DESTROY:
 		PostQuitMessage(0);
-
-		printf("- Window closed -");
 		return 0;
 	}
 
@@ -79,8 +78,7 @@ namespace bpd{
 
 		}
 		~Window(){
-			dll_Release(hD3D);
-			dll_Unload(hDll);
+			
 		}
 
 		
@@ -90,7 +88,27 @@ namespace bpd{
 			unsigned int Y,
 			unsigned int Width,
 			unsigned int Height) {
-
+#if defined _WIN64
+#if !defined BPD_NO_D3D12
+			if(dll_Load(hDll,"dll_d3d12_x64.dll") == false)
+#endif
+#if !defined BPD_NO_D3D11
+				if(dll_Load(hDll,"dll_d3d11_x64.dll") == false)
+#endif
+#if !defined BPD_NO_D3D9
+					if(dll_Load(hDll,"dll_d3d9_x64.dll") == false)
+#endif
+#if !defined BPD_NO_VULKAN
+						if(dll_Load(hDll,"dll_vulklan_x64.dll") == false)
+#endif
+#if !defined BPD_NO_OPENGL
+							if(dll_Load(hDll,"dll_opengl_x64.dll") == false)
+#endif
+							{
+								ErrMsg("Could not load dll's");
+								return;
+							}
+#else
 #if !defined BPD_NO_D3D12
 			if(dll_Load(hDll, "dll_d3d12.dll") == false)
 #endif
@@ -110,6 +128,7 @@ namespace bpd{
 								ErrMsg("Could not load dll's");
 								return;
 							}
+#endif
 
 
 			CreatWindowClass();
@@ -123,6 +142,12 @@ namespace bpd{
 			UpdateWindow(hWnd);
 
 			dll_CreateGraphics(hD3D, hWnd);
+			dll_ReloadBuffers(hD3D, boxBuffer, 1);
+			dll_SetView(hD3D,Vec4{ x, 2.0f, -4.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },60.0f);
+
+			dll_CreateObj(hD3D,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+			dll_CreateObj(hD3D,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+			dll_CreateObj(hD3D,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
 
 		}
 
@@ -159,47 +184,23 @@ namespace bpd{
 				} else {
 					float clear_color[] = { 0.0f,0.0f,0.0f,1.0f };
 
-					if (x > 0)
-						y = x += 0.00001f;
+					if (x > 0) y = x += 0.0001f;
+
+					dll_SetView(hD3D,Vec4{ 0.0, 2.0f, -2.0f * x, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },60.0f);
+					
+					
+					dll_TransformObj(hD3D, 0,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 0.0001f, 0.0003f, 0.0002f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
+					dll_TransformObj(hD3D, 1,Vec4{-2.0f, (float)sin(x * 5), 0.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
+					dll_TransformObj(hD3D, 2,Vec4{ 2.0f, (float)cos(x * 5), 0.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
 
 
-					Vertex_buffer v[] = {
-						{ Vec3{-0.5f / x,  0.5f / y, 0.0f}, Vec4{1.0f, 0.0f, 0.0f, 1.0f} }, // top left
-						{ Vec3{ 1.0f / x, -1.0f / y, 0.0f}, Vec4{0.0f, 1.0f, 0.0f, 1.0f} }, // bottom right
-						{ Vec3{-1.0f / x, -1.0f / y, 0.0f}, Vec4{0.0f, 0.0f, 1.0f, 1.0f} }, // bottom left
-						{ Vec3{ 0.5f / x,  0.5f / y, 0.0f}, Vec4{0.0f, 0.0f, 0.0f, 1.0f} }, // top right
-					};
-					WORD i[] =
-					{
-						0,3,2,
-						2,3,1,
-					};
-
-
-					Vertex_buffer v2[] = {
-						{ Vec3{-1.0f,  1.0f, 0.0f }, Vec4{ 1.0f, 1.0f, 1.0f, 1.0f } }, // top left
-						{ Vec3{ 0.0f,  1.0f, 0.0f }, Vec4{ 1.0f, 0.0f, 0.0f, 1.0f } }, // top right
-						{ Vec3{-1.0f,  0.0f, 0.0f }, Vec4{ 1.0f, 0.0f, 0.0f, 1.0f } }, // bottom left
-					};
-					WORD i2[] =
-					{
-						0,1,2,
-					};
-
-
-					// index goes clockwise
-
-
-
-					Buffer b[] = {
-						{ v,  4, i,  6 },
-						{ v2, 4, i2, 3 },
-					};
-
-					dll_Draw(hD3D,b,2,clear_color);
+					dll_Draw(hD3D,boxBuffer,3,clear_color);
 					dll_Update(hD3D);
 				}
 			}
+
+			dll_Release(hD3D);
+			dll_Unload(hDll);
 		}
 
 		void CreateConsole(){

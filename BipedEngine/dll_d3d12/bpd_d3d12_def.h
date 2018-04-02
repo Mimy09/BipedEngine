@@ -38,6 +38,39 @@ namespace bpd{
 		D3D12_SHADER_BYTECODE pixelShaderBytecode;
 		D3D12_SHADER_BYTECODE vertexShaderBytecode;
 
+		ID3D12Resource* depthStencilBuffer; // This is the memory for our depth buffer. it will also be used for a stencil buffer in a later tutorial
+		ID3D12DescriptorHeap* dsDescriptorHeap; // This is a heap for our depth/stencil buffer descriptor
+
+		ID3D12DescriptorHeap* mainDescriptorHeap[FRAME]; // this heap will store the descriptor to our constant buffer
+		//ID3D12Resource* constantBufferUploadHeap[FRAME]; // this is the memory on the GPU where our constant buffer will be placed.
+
+		// Constant buffers must be 256-byte aligned which has to do with constant reads on the GPU.
+		// We are only able to read at 256 byte intervals from the start of a resource heap, so we will
+		// make sure that we add padding between the two constant buffers in the heap (one for cube1 and one for cube2)
+		// Another way to do this would be to add a float array in the constant buffer structure for padding. In this case
+		// we would need to add a float padding[50]; after the wvpMat variable. This would align our structure to 256 bytes (4 bytes per float)
+		// The reason i didn't go with this way, was because there would actually be wasted CPU cycles when memcpy our constant
+		// buffer data to the GPU virtual address. currently we memcpy the size of our structure, which is 16 bytes here, but if we
+		// were to add the padding array, we would memcpy 64 bytes if we memcpy the size of our structure, which is 50 wasted bytes
+		// being copied.
+		int ConstantBufferPerObjectAlignedSize = (sizeof(ConstantBufferPerObject) + 255) & ~255;
+
+		ConstantBufferPerObject cbPerObject; // this is the constant buffer data we will send to the GPU 
+											 // (which will be placed in the resource we created above)
+
+		ID3D12Resource* constantBufferUploadHeaps[FRAME]; // this is the memory on the GPU where constant buffers for each frame will be placed
+
+		UINT8* cbvGPUAddress[FRAME]; // this is a pointer to each of the constant buffer resource heaps
+
+		DirectX::XMFLOAT4X4 cameraProjMat; // this will store our projection matrix
+		DirectX::XMFLOAT4X4 cameraViewMat; // this will store our view matrix
+
+		DirectX::XMFLOAT4 cameraPosition; // this is our cameras position vector
+		DirectX::XMFLOAT4 cameraTarget; // a vector describing the point in space our camera is looking at
+		DirectX::XMFLOAT4 cameraUp; // the worlds up vector
+
+		std::vector<Transform> obj_list;
+
 		int frameIndex; // current rtv we are on
 		int rtvDescriptorSize; // size of the rtv descriptor on the device (all front and back buffers will be the same size)
 							   // function declarations

@@ -1,5 +1,6 @@
 ﻿  bpd_d3d11.cpp
 d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d11\bpd_d3d11.cpp(151): warning C4316: 'bpd::_D3D11_Window': object allocated on the heap may not be aligned 16
 d:\programfiles\programming\_git\bipedengine\bipedengine\dll_d3d11\bpd_d3d11.cpp(174): warning C4101: 'buffer': unreferenced local variable
-     Creating library D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Debug\dll_d3d11.lib and object D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Debug\dll_d3d11.exp
+  dllMain.cpp
+  Generating Code...
   dll_d3d11.vcxproj -> D:\ProgramFiles\Programming\_GIT\BipedEngine\BipedEngine\Builds\Debug\dll_d3d11.dll
