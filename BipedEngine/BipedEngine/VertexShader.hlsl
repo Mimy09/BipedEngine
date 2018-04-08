@@ -15,6 +15,7 @@ cbuffer ConstantBuffer : register(b0) {
 VS_OUTPUT main(VS_INPUT input) {
 	VS_OUTPUT output;
 	output.pos = mul(input.pos,wvpMat);
+	//output.pos = input.pos;
 	output.color = input.color;
 	return output;
 }

@@ -64,7 +64,6 @@ extern "C" {
 
 			CheckSucceeded(d3d12->device->CreateCommandQueue(&cqDesc,IID_PPV_ARGS(&d3d12->commandQueue))); // create the command queue
 		}
-
 		/********************************************************************************************************************/
 		// -- Create the Swap Chain (double/triple buffering) -- //
 		{
@@ -388,8 +387,6 @@ extern "C" {
 		d3d12->commandList->IASetVertexBuffers(0,1,&d3d12->vertexBufferView); // set the vertex buffer (using the vertex buffer view)
 		d3d12->commandList->IASetIndexBuffer(&d3d12->indexBufferView);
 		
-		// first cube
-
 		for (int i = 0; i < numBuffers; i++){
 			// set cubes constant buffer. You can see we are adding the size of ConstantBufferPerObject to the constant buffer
 			// resource heaps address. This is because cubes constant buffer is stored at the beginning of the resource heap, while
@@ -749,7 +746,7 @@ extern "C" {
 		CheckSucceeded(d3d12->commandQueue->Signal(d3d12->fence[d3d12->frameIndex],d3d12->fenceValue[d3d12->frameIndex]));
 
 		// present the current back buffer
-		CheckSucceeded(d3d12->swapChain->Present(0,0));
+		CheckSucceeded(d3d12->swapChain->Present(1,0));
 
 	}
 

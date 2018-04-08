@@ -142,12 +142,12 @@ namespace bpd{
 			UpdateWindow(hWnd);
 
 			dll_CreateGraphics(hD3D, hWnd);
-			dll_ReloadBuffers(hD3D, boxBuffer, 1);
-			dll_SetView(hD3D,Vec4{ x, 2.0f, -4.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },60.0f);
+			dll_ReloadBuffers(hD3D, cubeBuffer, 1);
+			dll_SetView(hD3D,Vec4{ 0.0f, 3.0f, -8.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },60.0f);
 
 			dll_CreateObj(hD3D,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
-			dll_CreateObj(hD3D,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
-			dll_CreateObj(hD3D,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f });
+			dll_CreateObj(hD3D,Vec4{ 3.0f, 0.0f, 0.0f, 0.0f });
+			dll_CreateObj(hD3D,Vec4{-3.0f, 0.0f, 0.0f, 0.0f });
 
 		}
 
@@ -184,18 +184,14 @@ namespace bpd{
 				} else {
 					float clear_color[] = { 0.0f,0.0f,0.0f,1.0f };
 
-					if (x > 0) y = x += 0.0001f;
-
-					dll_SetView(hD3D,Vec4{ 0.0, 2.0f, -2.0f * x, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },60.0f);
+					//dll_SetView(hD3D,Vec4{ 0.0, 3.0f, -8.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },60.0f);
 					
-					
-					dll_TransformObj(hD3D, 0,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 0.0001f, 0.0003f, 0.0002f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
-					dll_TransformObj(hD3D, 1,Vec4{-2.0f, (float)sin(x * 5), 0.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
-					dll_TransformObj(hD3D, 2,Vec4{ 2.0f, (float)cos(x * 5), 0.0f, 0.0f },Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
+					//dll_TransformObj(hD3D,0,Vec4{ 0.0f, 0.0f, 0.0f, 0.0f },Vec4{ 0.01f, 0.03f, 0.02f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
+					//dll_TransformObj(hD3D,1,Vec4{ 3.0f, 0.0f, 0.0f, 0.0f },Vec4{ 0.00f, 0.00f, 0.00f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
+					//dll_TransformObj(hD3D,2,Vec4{-3.0f, 0.0f, 0.0f, 0.0f },Vec4{ 0.00f, 0.00f, 0.00f, 0.0f },Vec4{ 1.0f, 1.0f, 1.0f, 0.0f });
 
-
-					dll_Draw(hD3D,boxBuffer,3,clear_color);
 					dll_Update(hD3D);
+					dll_Draw(hD3D,cubeBuffer,3,clear_color);
 				}
 			}
 

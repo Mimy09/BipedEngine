@@ -8,16 +8,27 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 
+#include <D2D1.h>
+#include <sstream>
+#include <dwrite.h>
+#include <dinput.h>
+
+#pragma comment (lib, "D2D1.lib")
+#pragma comment (lib, "dwrite.lib")
+#pragma comment (lib, "dinput8.lib")
+#pragma comment (lib, "dxguid.lib")
+
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "dxgi.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
-#include <chrono>
 
 #define Handle(name) typedef struct _##name* name
 #define DLL __declspec(dllexport)
 
 #include <windows.h>
+#include <chrono>
+#include <vector>
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,8 +45,20 @@ extern "C" {
 		struct Buffer {
 			Vertex *vertex;
 			int vertex_count;
-			WORD *index;
+			DWORD *index;
 			int index_count;
+		};
+
+		struct ConstantBufferPerObject {
+			DirectX::XMFLOAT4X4 wvpMat;
+		};
+
+		struct Transform {
+			DirectX::XMFLOAT4X4 World;
+			DirectX::XMFLOAT4X4 Rotation;
+
+			DirectX::XMFLOAT4 Position;
+			DirectX::XMFLOAT4 Scale;
 		};
 	}
 
@@ -59,6 +82,32 @@ extern "C" {
 		bpd::Buffer buffer[],
 		int buffer_count,
 		float clear_color[4]
+	);
+
+	DLL void __stdcall dll_reloadBuffers(
+		bpd::D3D11_Window &d3d11,
+		bpd::Buffer buffer[],
+		int buffer_count
+	);
+
+	DLL void __stdcall dll_setView(
+		bpd::D3D11_Window &d3d11,
+		DirectX::XMFLOAT4 cam_pos,
+		DirectX::XMFLOAT4 cam_target,
+		float fov
+	);
+
+	DLL int __stdcall dll_createObj(
+		bpd::D3D11_Window &d3d11,
+		DirectX::XMFLOAT4 pos
+	);
+
+	DLL void __stdcall dll_transformObj(
+		bpd::D3D11_Window &d3d11,
+		int ID,
+		DirectX::XMFLOAT4 position,
+		DirectX::XMFLOAT4 rotation,
+		DirectX::XMFLOAT4 scale
 	);
 
 #ifdef __cplusplus

@@ -6,19 +6,19 @@ cbuffer ConstantBuffer : register(b0) {
 
 struct VS_Output{
 	float4 position : SV_POSITION;
-	//float4 color : COLOR;
+	float4 color : COLOR;
 };
 
 struct PS_Input {
 	float4 position : POSITION;
-	//float4 color : COLOR;
+	float4 color : COLOR;
 };
 
 VS_Output vs_main(PS_Input input)
 {
 	VS_Output output = (VS_Output)0;
 	output.position = input.position;
-	//output.color = input.color;
+	output.color = input.color;
 
 	return output;
 }
@@ -26,6 +26,6 @@ VS_Output vs_main(PS_Input input)
 
 float4 ps_main(PS_Input input) : SV_TARGET
 {
-	return float4(0.0f, 1.0f, 0.0f, 1.0f);
-	//return input.color;
+	//return float4(0.0f, 1.0f, 0.0f, 1.0f);
+	return input.color;
 }

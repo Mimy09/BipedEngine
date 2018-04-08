@@ -71,10 +71,10 @@ extern "C" {
 		};
 
 		struct Transform{
-			DirectX::XMFLOAT4X4 WorldMat; // our first cubes world matrix (transformation matrix)
-			DirectX::XMFLOAT4X4 RotMat; // this will keep track of our rotation for the first cube
-			DirectX::XMFLOAT4 Position; // our first cubes position in space
-			DirectX::XMFLOAT4 Scale; // our first cubes position in space
+			DirectX::XMFLOAT4X4 WorldMat; // our cubes world matrix (transformation matrix)
+			DirectX::XMFLOAT4X4 RotMat; // this will keep track of our rotation for the cube
+			DirectX::XMFLOAT4 Position; // our cubes position in space
+			DirectX::XMFLOAT4 Scale; // our cubes position in space
 		};
 	}
 
